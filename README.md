@@ -23,9 +23,10 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 
 Docker-compose doesn't do this, so executable files that are checked into git will no longer be executable when using ADD or COPY.  Those files will require a `chmod +x` step to be added to Dockerfile.
 
-The flyway user had to be removed from the flyway container so `chmod +x /cmd.sh` could be executed in the child container.
+The flyway user had to be removed from the flyway container so `chmod +x /cmd.sh || true` could be executed in the child container.
 
 # Other
+- Hyper-V enabled breaks VirtualBox: https://www.reddit.com/r/docker/comments/4rvlwp/possible_to_run_virtualbox_and_docker_with_hyper/
 - Alpine is not a container to use when debugging issues. Switching to debian to troubleshoot got us better feedback as to what the issues were. We then switched back to alpine image once we got the debian version running.
 - There were issues linking schemas image to database image in docker. I could see the database running with `docker ps`, but the schemas couldn't link to it.  This didn't seem to be an issue with docker-compose.
 - There is tool called EditorConfig (http://editorconfig.org/) that can be plugged in to IDEs to insure .sh and .sql files are managed in an editor with LF line feeds. It might be worth looking at if this becomes an issue.
